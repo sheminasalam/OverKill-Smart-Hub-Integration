@@ -4,7 +4,7 @@ The OverKill Smart Hub integration connects OverKill ESP8266 IR hubs to Home Ass
 
 The companion firmware and hardware live in the [OverKill Smart IR Hub project](https://github.com/sheminasalam/OverKill-Smart-IR-Hub). This repository contains **only the Home Assistant custom integration**, as required for HACS distribution.
 
-> **Release candidate:** version 1.3.0. Before treating this as a fully released or default-listed HACS integration, complete the license decision and Home Assistant Brands registration, then confirm that the HACS and Hassfest workflows pass and run the end-to-end test matrix.
+> **Pre-release:** manifest version 1.3.0. Before default HACS listing, complete Home Assistant Brands registration, publish a full GitHub release after CI passes, and finish the end-to-end test matrix.
 
 ## Features
 
@@ -91,8 +91,8 @@ This repository includes GitHub Actions for custom HACS-repository compatibility
 
 ## HACS publication status
 
-See [`PRE_RELEASE_CHECKLIST.md`](PRE_RELEASE_CHECKLIST.md). HACS's current integration guidance requires one integration under `custom_components/<domain>/`, a valid integration manifest, and Home Assistant Brands registration. This project uses PolyForm Noncommercial License 1.0.0 to restrict commercial use. As a result, it is not eligible for the HACS default repository list, which requires an OSI-approved open-source license. Install it via HACS's Custom repositories feature instead.
+See [`PRE_RELEASE_CHECKLIST.md`](PRE_RELEASE_CHECKLIST.md). This repository now uses the same MIT License as the Net Metering integration. MIT is an OSI-approved open-source license, so the license itself does not block HACS default-list submission. Default listing still requires the official HACS Action and Hassfest checks to pass, a full GitHub release, and Home Assistant Brands registration. Until those steps are complete, install it via HACS's Custom repositories feature.
 
 ## License
 
-A license has not yet been selected by the project owner. `LICENSE_PENDING.md` is a reminder, not a license. Choose the license before public release/default-list submission.
+This project is released under the MIT License. See [`LICENSE`](LICENSE).
