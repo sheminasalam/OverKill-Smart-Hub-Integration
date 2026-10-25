@@ -9,6 +9,36 @@ from .sensor import OverkillSensor
 
 _LOGGER = logging.getLogger(__name__)
 
+_MAX_DISCOVERY_CONFIG_BYTES = 64 * 1024
+_MAX_MQTT_TOPIC_LENGTH = 512
+_TOPIC_FIELDS = (
+    "cmd_t",
+    "command_topic",
+    "stat_t",
+    "state_topic",
+    "avty_t",
+    "availability_topic",
+)
+
+
+def _topic_belongs_to_hub(topic: object, prefix: str) -> bool:
+    """Accept only literal MQTT topics scoped to this hub's configured prefix."""
+    if not isinstance(topic, str):
+        return False
+    topic = topic.strip()
+    prefix = prefix.rstrip("/")
+    if (
+        not topic
+        or len(topic) > _MAX_MQTT_TOPIC_LENGTH
+        or not topic.startswith(f"{prefix}/")
+        or any(ord(char) < 0x20 for char in topic)
+        or "+" in topic
+        or "#" in topic
+        or "\\x00" in topic
+    ):
+        return False
+    return True
+
 
 async def handle_discovery_message(hub, msg) -> None:
     """Handle a retained HA discovery config emitted by hub firmware."""
@@ -23,17 +53,35 @@ async def handle_discovery_message(hub, msg) -> None:
         return
 
     topic = str(msg.topic)
+    expected_root = f"{hub.topic_prefix.rstrip('/')}/_system/ha/"
+    if (
+        not topic.startswith(expected_root)
+        or len(topic) > _MAX_MQTT_TOPIC_LENGTH
+        or any(ord(char) < 0x20 for char in topic)
+    ):
+        _LOGGER.warning("Ignored discovery topic outside hub namespace")
+        return
+
     parts = topic.split("/")
     if len(parts) < 3 or parts[-1] != "config":
         return
 
     component = parts[-3]
     uid = parts[-2]
+    if component not in ("button", "sensor") or not uid or len(uid) > 128:
+        _LOGGER.warning("Ignored invalid discovery component or identifier on %s", topic)
+        return
 
     raw = msg.payload
     if isinstance(raw, (bytes, bytearray)):
+        if len(raw) > _MAX_DISCOVERY_CONFIG_BYTES:
+            _LOGGER.warning("Ignored oversized discovery payload on %s", topic)
+            return
         raw = raw.decode("utf-8", errors="replace")
     raw = (raw or "").strip()
+    if len(raw.encode("utf-8")) > _MAX_DISCOVERY_CONFIG_BYTES:
+        _LOGGER.warning("Ignored oversized discovery payload on %s", topic)
+        return
 
     if not raw:
         await hub.hass.async_create_task(hub.coord.async_remove_entity(uid))
@@ -41,9 +89,23 @@ async def handle_discovery_message(hub, msg) -> None:
 
     try:
         payload = json.loads(raw)
-    except ValueError:
+    except (ValueError, TypeError):
         _LOGGER.warning("Bad discovery JSON on %s", topic)
         return
+
+    if not isinstance(payload, dict):
+        _LOGGER.warning("Ignored non-object discovery payload on %s", topic)
+        return
+
+    prefix = hub.topic_prefix.rstrip("/")
+    for field in _TOPIC_FIELDS:
+        value = payload.get(field)
+        if value is not None and value != "" and not _topic_belongs_to_hub(value, prefix):
+            _LOGGER.warning(
+                "Ignored discovery config with out-of-namespace MQTT topic field %s on %s",
+                field, topic,
+            )
+            return
 
     payload["_topic"] = topic
 
