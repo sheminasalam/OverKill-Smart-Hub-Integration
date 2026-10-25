@@ -24,7 +24,7 @@ The companion firmware and hardware live in the [OverKill Smart IR Hub project](
 - A reachable MQTT broker shared by the hub and the configured integration transport.
 - AWS IoT Core and the three PEM files **only if** Alexa cloud bridging is being used. Local MQTT setup does not need AWS credentials or certificates.
 
-**Network-security note:** the firmware and this integration's optional Cloud MQTT transport currently use ordinary MQTT by default (port 1883) without TLS. Do not expose an unauthenticated/plaintext broker directly to the public Internet. Use a protected network/VPN or a broker setup with appropriate encryption, authentication and topic ACLs.
+**Network-security warning:** the firmware and this integration's optional Cloud MQTT transport currently use ordinary MQTT (typically port 1883) without TLS. MQTT usernames, passwords and payloads are not encrypted on that connection. Nabu Casa protects remote access to the Home Assistant UI; it does **not** protect this separate MQTT link. Do not use Cloud/Both MQTT across the public Internet in the current version. Use a VPN/private routed network and per-device broker credentials/topic ACLs until both clients support TLS; a TLS broker listener alone is not enough.
 
 ## Installation
 
