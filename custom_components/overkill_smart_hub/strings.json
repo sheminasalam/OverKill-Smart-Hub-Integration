@@ -24,13 +24,6 @@
         "description": "Choose how OverKill hubs reach Home Assistant. Local uses the MQTT integration already configured in Home Assistant. Cloud uses a separate broker connection for hubs away from your LAN. Both enables local discovery and the cloud broker.",
         "data": {
           "mqtt_mode": "MQTT transport mode"
-        },
-        "options": {
-          "mqtt_mode": {
-            "local": "Local MQTT only (no extra information needed)",
-            "cloud": "Cloud MQTT (enter broker details on the next page)",
-            "both": "Both local and cloud MQTT (enter cloud details on the next page)"
-          }
         }
       },
       "mqtt_cloud": {
@@ -75,12 +68,6 @@
         "description": "Choose whether to add another independent Alexa/AWS bridge or update the shared MQTT transport settings.",
         "data": {
           "setup_action": "What would you like to configure?"
-        },
-        "options": {
-          "setup_action": {
-            "transport": "Configure MQTT transport",
-            "add_bridge": "Add an Alexa AWS bridge"
-          }
         }
       },
       "assign_existing_hub": {
@@ -95,12 +82,6 @@
         "description": "Start with MQTT-only control, or configure the optional AWS IoT bridge for Alexa now. Local MQTT setup does not require AWS certificates. You can add the AWS bridge later.",
         "data": {
           "setup_path": "Choose how to start"
-        },
-        "options": {
-          "setup_path": {
-            "mqtt_only": "MQTT only — skip AWS/Alexa for now",
-            "aws_bridge": "Set up AWS IoT / Alexa bridge now"
-          }
         }
       }
     },
@@ -162,6 +143,27 @@
     "rediscover_hubs": {
       "name": "Rediscover hubs",
       "description": "Re-subscribe to hub discovery topics and rebuild the hub list from retained MQTT messages."
+    }
+  },
+  "selector": {
+    "setup_path": {
+      "options": {
+        "mqtt_only": "MQTT only — skip AWS/Alexa for now",
+        "aws_bridge": "Set up AWS IoT / Alexa bridge now"
+      }
+    },
+    "setup_action": {
+      "options": {
+        "transport": "Configure MQTT transport",
+        "add_bridge": "Add an Alexa AWS bridge"
+      }
+    },
+    "mqtt_mode": {
+      "options": {
+        "local": "Local MQTT only (no extra information needed)",
+        "cloud": "Cloud MQTT (enter broker details on the next page)",
+        "both": "Both local and cloud MQTT (enter cloud details on the next page)"
+      }
     }
   }
 }
