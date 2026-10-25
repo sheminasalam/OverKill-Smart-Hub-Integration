@@ -187,9 +187,13 @@ class OverkillSmartHubConfigFlow(ConfigFlow, domain=DOMAIN):
         return self.async_show_form(
             step_id="initial_setup",
             data_schema=vol.Schema({
-                vol.Required("setup_path", default="mqtt_only"): vol.In([
-                    "mqtt_only", "aws_bridge",
-                ]),
+                vol.Required("setup_path", default="mqtt_only"): SelectSelector(
+                    SelectSelectorConfig(
+                        options=["mqtt_only", "aws_bridge"],
+                        translation_key="setup_path",
+                        mode=SelectSelectorMode.DROPDOWN,
+                    )
+                ),
             }),
         )
 
@@ -204,9 +208,13 @@ class OverkillSmartHubConfigFlow(ConfigFlow, domain=DOMAIN):
         return self.async_show_form(
             step_id="existing_setup",
             data_schema=vol.Schema({
-                vol.Required("setup_action", default="transport"): vol.In([
-                    "transport", "add_bridge",
-                ]),
+                vol.Required("setup_action", default="transport"): SelectSelector(
+                    SelectSelectorConfig(
+                        options=["transport", "add_bridge"],
+                        translation_key="setup_action",
+                        mode=SelectSelectorMode.DROPDOWN,
+                    )
+                ),
             }),
         )
 
@@ -440,11 +448,17 @@ class OverkillSmartHubConfigFlow(ConfigFlow, domain=DOMAIN):
                 return await self.async_step_mqtt_both()
 
         schema = vol.Schema({
-            vol.Required(CONF_MQTT_MODE, default=MQTT_MODE_LOCAL): vol.In([
-                MQTT_MODE_LOCAL,
-                MQTT_MODE_CLOUD,
-                MQTT_MODE_BOTH,
-            ]),
+            vol.Required(CONF_MQTT_MODE, default=MQTT_MODE_LOCAL): SelectSelector(
+                SelectSelectorConfig(
+                    options=[
+                        MQTT_MODE_LOCAL,
+                        MQTT_MODE_CLOUD,
+                        MQTT_MODE_BOTH,
+                    ],
+                    translation_key="mqtt_mode",
+                    mode=SelectSelectorMode.DROPDOWN,
+                )
+            ),
         })
         return self.async_show_form(
             step_id="mqtt_transport", data_schema=schema,
