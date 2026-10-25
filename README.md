@@ -87,11 +87,11 @@ When reporting a problem, include the Home Assistant version, integration versio
 
 ## Development and validation
 
-This repository includes GitHub Actions for the HACS validator, Home Assistant Hassfest and lightweight package/translation checks. These workflows must pass on GitHub before publishing a release. A local Python syntax check alone does not prove end-to-end operation; test the integration in a clean Home Assistant instance with Local MQTT, Cloud MQTT, Both, optional AWS bridge, bridge assignment, reconnect/reload and hub rediscovery.
+This repository includes GitHub Actions for custom HACS-repository compatibility, Home Assistant Hassfest and lightweight package/translation checks. These workflows must pass on GitHub before publishing a release. A local Python syntax check alone does not prove end-to-end operation; test the integration in a clean Home Assistant instance with Local MQTT, Cloud MQTT, Both, optional AWS bridge, bridge assignment, reconnect/reload and hub rediscovery.
 
 ## HACS publication status
 
-See [`PRE_RELEASE_CHECKLIST.md`](PRE_RELEASE_CHECKLIST.md). HACS's current integration guidance requires one integration under `custom_components/<domain>/`, a valid integration manifest, and Home Assistant Brands registration. Default-repository submission additionally requires the HACS and Hassfest workflows to pass, a full GitHub Release and a recognized open-source license.
+See [`PRE_RELEASE_CHECKLIST.md`](PRE_RELEASE_CHECKLIST.md). HACS's current integration guidance requires one integration under `custom_components/<domain>/`, a valid integration manifest, and Home Assistant Brands registration. This project uses PolyForm Noncommercial License 1.0.0 to restrict commercial use. As a result, it is not eligible for the HACS default repository list, which requires an OSI-approved open-source license. Install it via HACS's Custom repositories feature instead.
 
 ## License
 
