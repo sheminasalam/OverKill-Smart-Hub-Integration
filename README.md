@@ -87,7 +87,7 @@ When reporting a problem, include the Home Assistant version, integration versio
 
 ## Development and validation
 
-This repository includes GitHub Actions for custom HACS-repository compatibility, Home Assistant Hassfest and lightweight package/translation checks. These workflows must pass on GitHub before publishing a release. A local Python syntax check alone does not prove end-to-end operation; test the integration in a clean Home Assistant instance with Local MQTT, Cloud MQTT, Both, optional AWS bridge, bridge assignment, reconnect/reload and hub rediscovery.
+This repository includes GitHub Actions for the official HACS Action, Home Assistant Hassfest and lightweight package/translation checks. All three currently pass on GitHub. A local Python syntax check alone does not prove end-to-end operation; test the integration in a clean Home Assistant instance with Local MQTT, Cloud MQTT, Both, optional AWS bridge, bridge assignment, reconnect/reload and hub rediscovery before publishing a release.
 
 ## HACS publication status
 
