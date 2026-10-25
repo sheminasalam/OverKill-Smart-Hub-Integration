@@ -1,0 +1,167 @@
+{
+  "config": {
+    "step": {
+      "aws_bridge": {
+        "title": "Connect the Alexa (AWS IoT) bridge",
+        "description": "Configure the optional Alexa/AWS IoT bridge. Enter the endpoint hostname and select the three files downloaded for your AWS IoT Thing. Each file is checked and copied into Home Assistant’s private OverKill Smart Hub folder. After this page, you will choose Local, Cloud, or Both for MQTT transport.",
+        "data": {
+          "aws_endpoint": "AWS IoT endpoint hostname",
+          "aws_client_id": "AWS IoT MQTT client ID",
+          "aws_ca_pem": "Amazon Root CA certificate (AmazonRootCA1.pem)",
+          "aws_cert_pem": "AWS IoT device certificate (.pem.crt)",
+          "aws_key_pem": "AWS IoT device private key (.pem.key)"
+        },
+        "data_description": {
+          "aws_endpoint": "Copy the endpoint hostname from AWS IoT Core → Settings. Do not include https:// or a path.",
+          "aws_client_id": "Use a unique client ID allowed by the AWS IoT policy attached to this certificate. Do not reuse nodered-1 while Node-RED is connected, because MQTT brokers disconnect clients that share an ID.",
+          "aws_ca_pem": "Select AmazonRootCA1.pem. This is the AWS root certificate, not your device certificate.",
+          "aws_cert_pem": "Select the certificate generated for this AWS IoT Thing (often ends in .pem.crt).",
+          "aws_key_pem": "Select the matching private key for the Thing (often ends in .pem.key). Keep this file private."
+        }
+      },
+      "mqtt_transport": {
+        "title": "MQTT transport setup",
+        "description": "Choose how OverKill hubs reach Home Assistant. Local uses the MQTT integration already configured in Home Assistant. Cloud uses a separate broker connection for hubs away from your LAN. Both enables local discovery and the cloud broker.",
+        "data": {
+          "mqtt_mode": "MQTT transport mode"
+        },
+        "options": {
+          "mqtt_mode": {
+            "local": "Local MQTT only (no extra information needed)",
+            "cloud": "Cloud MQTT (enter broker details on the next page)",
+            "both": "Both local and cloud MQTT (enter cloud details on the next page)"
+          }
+        }
+      },
+      "mqtt_cloud": {
+        "title": "Cloud MQTT broker details",
+        "description": "Enter the broker used by hubs outside your LAN. The ESP firmware uses plain MQTT, without TLS. Leave optional client ID and login fields blank if your broker does not require them.",
+        "data": {
+          "broker_host": "Broker hostname",
+          "broker_port": "Broker port",
+          "broker_client_id": "Client ID (optional)",
+          "broker_username": "Username (optional)",
+          "broker_password": "Password (optional)"
+        }
+      },
+      "mqtt_both": {
+        "title": "Cloud MQTT broker details for Local + Cloud mode",
+        "description": "Local MQTT discovery stays enabled. Enter the broker for hubs outside your LAN. The ESP firmware uses plain MQTT, without TLS.",
+        "data": {
+          "broker_host": "Broker hostname",
+          "broker_port": "Broker port",
+          "broker_client_id": "Client ID (optional)",
+          "broker_username": "Username (optional)",
+          "broker_password": "Password (optional)"
+        }
+      },
+      "confirm_hub": {
+        "title": "Add discovered OverKill hub?",
+        "description": "Found {hub_name} on {transport}. MQTT topic prefix: {topic_prefix}. Press Submit to add this hub to Home Assistant, or cancel this dialog to skip it. The chip tag and final device name will be corrected automatically when the hub publishes its identity.",
+        "data": {
+          "bridge_entry_id": "Alexa account / AWS bridge for this hub"
+        },
+        "data_description": {
+          "bridge_entry_id": "Select the Alexa account that should receive this hub’s learned devices. Choose None (no Alexa bridge) to keep the hub out of every Alexa catalogue. Remote/cloud hubs require an explicit selection to prevent accidental cross-account exposure."
+        }
+      },
+      "discover_hub": {
+        "title": "Search for your OverKill hub",
+        "description": "The selected MQTT transport is configured. Searching for retained hub discovery messages now. If no hub appears, make sure the hub is powered on and connected to the selected broker, then press Submit to search again.",
+        "data": {}
+      },
+      "existing_setup": {
+        "title": "OverKill Smart Hub setup options",
+        "description": "Choose whether to add another independent Alexa/AWS bridge or update the shared MQTT transport settings.",
+        "data": {
+          "setup_action": "What would you like to configure?"
+        },
+        "options": {
+          "setup_action": {
+            "transport": "Configure MQTT transport",
+            "add_bridge": "Add an Alexa AWS bridge"
+          }
+        }
+      },
+      "assign_existing_hub": {
+        "title": "Assign an existing hub to the new bridge",
+        "description": "Optionally move one already-configured hub to {bridge_name}. This replaces its current Alexa catalogue assignment; other hubs remain with their existing bridge.",
+        "data": {
+          "hub_entry_id": "Hub to assign"
+        }
+      },
+      "initial_setup": {
+        "title": "Set up OverKill Smart Hub",
+        "description": "Start with MQTT-only control, or configure the optional AWS IoT bridge for Alexa now. Local MQTT setup does not require AWS certificates. You can add the AWS bridge later.",
+        "data": {
+          "setup_path": "Choose how to start"
+        },
+        "options": {
+          "setup_path": {
+            "mqtt_only": "MQTT only — skip AWS/Alexa for now",
+            "aws_bridge": "Set up AWS IoT / Alexa bridge now"
+          }
+        }
+      }
+    },
+    "error": {
+      "invalid_cert": "A PEM file is missing or invalid. See the log for which one.",
+      "invalid_broker": "Broker host is required.",
+      "invalid_ca_file": "Could not read a valid Amazon Root CA certificate. Select AmazonRootCA1.pem and check the file contents.",
+      "invalid_device_cert": "Could not read a valid AWS IoT device certificate. Select the certificate for your Thing.",
+      "invalid_private_key": "Could not read a valid private key. Select the matching private key for your Thing.",
+      "required": "This field is required.",
+      "hub_not_found": "No hub was detected yet. Check that the hub is online and connected to this MQTT broker, then press Submit to search again."
+    },
+    "abort": {
+      "already_configured": "Already configured.",
+      "no_data": "No discovery data.",
+      "invalid_tag": "Invalid hub tag.",
+      "transport_updated": "MQTT transport updated. The integration has been reloaded.",
+      "invalid_transport_mode": "Select Local, Cloud, or Both for MQTT transport.",
+      "invalid_broker": "Cloud broker hostname is required.",
+      "setup_failed": "The bridge or MQTT transport could not be configured. Check the Home Assistant logs and try again.",
+      "setup_complete_hub_exists": "Bridge and MQTT transport are configured. A hub is already configured, so no duplicate hub was added.",
+      "bridge_added": "The additional Alexa AWS bridge was added. Newly discovered hubs can be assigned to it during hub confirmation, or existing hubs can be reassigned in their options.",
+      "bridge_hub_assigned": "The hub was assigned to the new Alexa bridge. Its catalogue will be published to that bridge after the hub finishes syncing."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "OverKill Smart Hub options",
+        "data": {
+          "mqtt_mode": "MQTT transport mode",
+          "broker_host": "Cloud broker hostname",
+          "broker_port": "Cloud broker port",
+          "broker_client_id": "Client ID",
+          "broker_username": "Username",
+          "broker_password": "Password",
+          "bridge_entry_id": "Alexa account / AWS bridge for this hub"
+        }
+      },
+      "broker": {
+        "title": "Cloud broker details",
+        "description": "Enter the connection details for the cloud MQTT broker. The ESP firmware uses plain MQTT — no TLS.",
+        "data": {
+          "broker_host": "Broker hostname",
+          "broker_port": "Broker port",
+          "broker_client_id": "Client ID (optional)",
+          "broker_username": "Username (optional)",
+          "broker_password": "Password (optional)"
+        }
+      }
+    },
+    "error": {
+      "invalid_broker": "Broker host is required.",
+      "invalid_endpoint": "AWS IoT endpoint hostname is required.",
+      "already_configured": "That AWS IoT endpoint is already used by another bridge. Use a separate AWS endpoint for each Alexa account."
+    }
+  },
+  "services": {
+    "rediscover_hubs": {
+      "name": "Rediscover hubs",
+      "description": "Re-subscribe to hub discovery topics and rebuild the hub list from retained MQTT messages."
+    }
+  }
+}

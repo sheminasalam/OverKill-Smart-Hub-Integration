@@ -1,0 +1,3 @@
+rediscover_hubs:
+  name: Rediscover hubs
+  description: Re-subscribe to hub discovery topics and rebuild the hub list from retained MQTT messages.
