@@ -39,6 +39,19 @@ def main() -> int:
     if hacs.get("render_readme") is not True:
         raise SystemExit("hacs.json must set render_readme=true or the root README will not render in HACS")
 
+    # This project intentionally restricts commercial use. Validate that choice
+    # directly; the official HACS Action's default-store license gate will reject
+    # non-commercial licenses, even though custom repository installation is supported.
+    license_path = ROOT / "LICENSE"
+    try:
+        license_text = license_path.read_text(encoding="utf-8")
+    except OSError as err:
+        raise SystemExit("Missing root LICENSE file") from err
+    if not license_text.startswith("# PolyForm Noncommercial License 1.0.0"):
+        raise SystemExit("LICENSE must identify the selected PolyForm Noncommercial License 1.0.0")
+    if "Required Notice: Copyright (c) 2026 Shemin A Salam" not in license_text:
+        raise SystemExit("LICENSE is missing the author's required copyright notice")
+
     strings = load_json(COMPONENT / "strings.json")
     english = load_json(COMPONENT / "translations" / "en.json")
     if strings != english:
