@@ -12,7 +12,9 @@ Local mode listens through Home Assistant's existing MQTT integration. It intent
 
 ## Cloud mode
 
-Cloud mode creates a separate broker connection for a hub that is not on the Home Assistant LAN. Both the hub and integration must use the same broker address, port, authentication and corresponding topic configuration. The current cloud transport is plain MQTT; use a trusted network path and secure broker controls.
+Cloud mode creates a separate broker connection for a hub that is not on the Home Assistant LAN. Both the hub and integration must use the same broker address, port, authentication and corresponding topic configuration.
+
+**Security limitation:** the current firmware and integration use plain MQTT without TLS. Usernames, passwords and topic payloads are therefore not protected by this MQTT connection. Nabu Casa encrypts remote access to the Home Assistant UI, but it does not encrypt this separate MQTT traffic. Do not use Cloud/Both MQTT across the public Internet in the current version. Use a VPN/private routed network and per-device broker credentials/topic ACLs until both the hub firmware and integration support TLS. A TLS listener on the broker alone is insufficient while either client still uses plain MQTT.
 
 ## Both mode
 
