@@ -28,7 +28,7 @@
       },
       "mqtt_cloud": {
         "title": "Cloud MQTT broker details",
-        "description": "Enter the broker used by hubs outside your LAN. The ESP firmware uses plain MQTT, without TLS. Leave optional client ID and login fields blank if your broker does not require them.",
+        "description": "Enter the broker used by hubs outside your LAN. The ESP firmware uses plain MQTT, without TLS. Leave optional client ID and login fields blank if your broker does not require them. IMPORTANT: Cloud MQTT is unencrypted in the current firmware and integration. Nabu Casa secures Home Assistant remote UI access, but it does not protect this separate MQTT connection. Do not use Cloud/Both MQTT over the public Internet; use a VPN/private routed network until both MQTT clients support TLS.",
         "data": {
           "broker_host": "Broker hostname",
           "broker_port": "Broker port",
@@ -39,7 +39,7 @@
       },
       "mqtt_both": {
         "title": "Cloud MQTT broker details for Local + Cloud mode",
-        "description": "Local MQTT discovery stays enabled. Enter the broker for hubs outside your LAN. The ESP firmware uses plain MQTT, without TLS.",
+        "description": "Local MQTT discovery stays enabled. Enter the broker for hubs outside your LAN. The ESP firmware uses plain MQTT, without TLS. IMPORTANT: Cloud MQTT is unencrypted in the current firmware and integration. Nabu Casa secures Home Assistant remote UI access, but it does not protect this separate MQTT connection. Do not use Cloud/Both MQTT over the public Internet; use a VPN/private routed network until both MQTT clients support TLS.",
         "data": {
           "broker_host": "Broker hostname",
           "broker_port": "Broker port",
