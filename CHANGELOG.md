@@ -10,4 +10,4 @@ All notable changes to the OverKill Smart Hub Home Assistant integration are doc
 - Documented Local, Cloud and Both MQTT modes, optional AWS IoT/Alexa bridge setup, multi-bridge assignment and troubleshooting.
 - Removed generated Python bytecode from the release package.
 
-This candidate has passed local Python syntax and package consistency checks only. GitHub HACS/Hassfest workflows and end-to-end Home Assistant tests remain required before release.
+The official HACS Action, Home Assistant Hassfest and repository static checks pass on GitHub. End-to-end Home Assistant testing across the supported transport and AWS bridge configurations remains required before release. The repository license is MIT, matching the Net Metering integration.
