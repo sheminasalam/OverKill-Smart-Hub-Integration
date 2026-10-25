@@ -34,7 +34,7 @@ def _topic_belongs_to_hub(topic: object, prefix: str) -> bool:
         or any(ord(char) < 0x20 for char in topic)
         or "+" in topic
         or "#" in topic
-        or "\\x00" in topic
+        or "\x00" in topic
     ):
         return False
     return True
