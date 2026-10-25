@@ -1,4 +1,9 @@
-name: HACS validation
+name: Custom HACS compatibility
+
+# The official HACS Action also enforces eligibility for the default HACS list.
+# This repository intentionally uses PolyForm Noncommercial, which is incompatible
+# with default-list inclusion. These checks validate the supported custom-repository
+# installation path without misrepresenting default-store eligibility.
 
 on:
   push:
@@ -16,7 +21,7 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-      - name: Validate with HACS
-        uses: hacs/action@main
-        with:
-          category: integration
+      - name: Validate HACS custom-repository structure, metadata and chosen license
+        run: python scripts/validate_repo.py
+      - name: Compile integration Python source
+        run: PYTHONPYCACHEPREFIX=/tmp/overkill-pycache python -m compileall -q custom_components/overkill_smart_hub
