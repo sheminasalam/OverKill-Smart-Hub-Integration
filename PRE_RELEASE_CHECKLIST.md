@@ -7,7 +7,7 @@
 - [ ] Set the GitHub repository description to: `Home Assistant integration for OverKill ESP8266 Smart IR Hubs via MQTT, with optional AWS IoT/Alexa bridging.`
 - [ ] Add topics: `home-assistant`, `home-assistant-custom-component`, `hacs`, `mqtt`, `esp8266`, `infrared`, `alexa`.
 - [ ] Enable GitHub Issues.
-- [ ] Choose and add an actual open-source license. Do not submit `LICENSE_PENDING.md` as a license.
+- [x] Add the MIT License matching the Net Metering integration; verify GitHub recognizes it as MIT.
 - [ ] Verify the new repository links in `manifest.json` point to the final repo URL after creation.
 
 ## Automated validation
