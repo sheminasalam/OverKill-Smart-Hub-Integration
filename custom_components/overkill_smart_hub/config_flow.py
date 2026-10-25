@@ -4,6 +4,7 @@ from __future__ import annotations
 import asyncio
 import hashlib
 import logging
+import os
 import shutil
 from pathlib import Path
 
@@ -142,26 +143,50 @@ def _bridge_selector(hass, current_id: str | None = None) -> SelectSelector:
     ))
 
 
+_MAX_PEM_SIZE_BYTES = 256 * 1024
+
+
 def _cert_dir(hass) -> Path:
+    """Create a private directory for AWS certificates and keys."""
     d = Path(hass.config.path("overkill_smart_hub"))
-    d.mkdir(parents=True, exist_ok=True)
+    if d.is_symlink():
+        raise ValueError("Certificate directory must not be a symbolic link")
+    d.mkdir(parents=True, exist_ok=True, mode=0o700)
+    if not d.is_dir():
+        raise ValueError("Certificate path is not a directory")
+    # mkdir's mode is ignored when the directory already exists.
+    os.chmod(d, 0o700)
     return d
 
 
 def _resolve_and_validate(hass, uploaded_value, marker, label, dest_name):
     if not uploaded_value:
         raise ValueError(f"{label}: no file selected")
-    dest = _cert_dir(hass) / dest_name
+    cert_dir = _cert_dir(hass)
+    dest = cert_dir / dest_name
+    if dest.is_symlink():
+        raise ValueError(f"{label}: refusing to overwrite a symbolic link")
     with process_uploaded_file(hass, uploaded_value) as src:
         if not src.is_file():
             raise ValueError(f"{label}: file not found")
         size = src.stat().st_size
         if size < 50:
             raise ValueError(f"{label}: file looks empty ({size} bytes)")
-        text = src.read_text(errors="replace")
+        # PEM certificates/keys are small. Bound memory use before read_text()
+        # so an oversized authenticated upload cannot consume excessive RAM.
+        if size > _MAX_PEM_SIZE_BYTES:
+            raise ValueError(f"{label}: PEM file is unexpectedly large ({size} bytes)")
+        text = src.read_text(encoding="utf-8", errors="replace")
         if marker not in text:
             raise ValueError(f"{label}: not a valid PEM file ({marker} missing)")
         shutil.copy2(src, dest)
+        try:
+            # copy2 preserves the uploaded file's mode (often 0644); private
+            # AWS keys must not inherit permissions that make them world-readable.
+            os.chmod(dest, 0o600)
+        except OSError:
+            dest.unlink(missing_ok=True)
+            raise
         return str(dest)
 
 
