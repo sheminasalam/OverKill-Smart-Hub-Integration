@@ -20,12 +20,12 @@ If the repository's default branch is named differently, push to that branch and
 
 ## 3. Read the first CI results
 
-Open the repository's **Actions** tab. Confirm Static checks, Custom HACS compatibility checks and Hassfest complete. This project uses PolyForm Noncommercial to reserve commercial use for separate permission, so it is not eligible for the HACS default list. The Custom HACS compatibility workflow checks the repository layout and chosen license for the supported custom-repository path; it does not claim default-store eligibility.
+Open the repository's **Actions** tab. Confirm Static checks, the official HACS Action and Hassfest complete successfully without ignored failures. The lightweight package check supplements HACS validation.
 
-## 4. Choose a license and submit branding
+## 4. License and Home Assistant Brands
 
-The repository uses PolyForm Noncommercial License 1.0.0, which restricts commercial use. The Home Assistant Brands contribution payload is provided separately as `OverKill-HomeAssistant-Brands-Submission.zip`; open a PR to `home-assistant/brands` adding its `custom_integrations/overkill_smart_hub/` directory.
+The repository now uses the same MIT License as the Net Metering integration. MIT permits commercial and non-commercial use, subject to its notice and warranty terms. The Home Assistant Brands contribution payload is provided separately as `OverKill-HomeAssistant-Brands-Submission.zip`; open a PR to `home-assistant/brands` adding its `custom_integrations/overkill_smart_hub/` directory.
 
 ## 5. Test, release, then optionally submit to HACS default
 
-Test the integration in a clean Home Assistant instance using `PRE_RELEASE_CHECKLIST.md`. Once the custom-repository checks and Hassfest pass, the release has been tested and branding is registered, create a full GitHub Release tagged `v1.3.0`. Do not submit this non-commercially licensed repository to `hacs/default`; the license is intentionally incompatible with its open-source license requirement.
+Test the integration in a clean Home Assistant instance using `PRE_RELEASE_CHECKLIST.md`. Once the official HACS Action and Hassfest pass, the functional test matrix is complete, and branding is registered, create a full GitHub Release tagged `v1.3.0`. Then submit the integration to your `hacs/default` fork on a new branch based on `master`, and open a PR against `hacs/default`.
