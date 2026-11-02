@@ -4,7 +4,7 @@ The OverKill Smart Hub integration connects OverKill ESP8266 IR hubs to Home Ass
 
 The companion firmware and hardware live in the [OverKill Smart IR Hub project](https://github.com/sheminasalam/OverKill-Smart-IR-Hub). This repository contains **only the Home Assistant custom integration**, as required for HACS distribution.
 
-> **Pre-release:** manifest version 1.3.0. Before default HACS listing, complete Home Assistant Brands registration, publish a full GitHub release after CI passes, and finish the end-to-end test matrix.
+> **Release candidate:** manifest version 1.3.1. The integration icon is included at `custom_components/overkill_smart_hub/brand/icon.png`; a separate Home Assistant Brands repository submission is not required.
 
 ## Features
 
@@ -28,15 +28,18 @@ The companion firmware and hardware live in the [OverKill Smart IR Hub project](
 
 ## Installation
 
-### HACS (custom repository during beta / before default listing)
+### HACS (recommended)
 
-1. Create/use the public repository `sheminasalam/OverKill-Smart-Hub-Integration` with these files at its root. The repository URL is intended to be `https://github.com/sheminasalam/OverKill-Smart-Hub-Integration`.
-2. In Home Assistant, open **HACS → Integrations → ⋮ → Custom repositories**.
-3. Add `https://github.com/sheminasalam/OverKill-Smart-Hub-Integration` and select **Integration** as the category.
-4. Find **OverKill Smart Hub**, download/install it, then restart Home Assistant.
-5. Go to **Settings → Devices & services → Add integration → OverKill Smart Hub**.
+1. In Home Assistant, open **HACS → Integrations** and search for **OverKill Smart Hub**.
+2. When it appears in the default list, open it and select **Download**.
+3. Restart Home Assistant.
+4. Go to **Settings → Devices & services → Add integration → OverKill Smart Hub**.
 
-The repository has not yet been added to HACS default repositories. Until that is accepted, users may need to install it as a custom repository.
+**Until the HACS default-list pull request is merged**, the integration may not appear in search yet. In that case, add it temporarily through **HACS → Integrations → ⋮ → Custom repositories**:
+
+1. Enter `https://github.com/sheminasalam/OverKill-Smart-Hub-Integration`.
+2. Select **Integration** as the category and add the repository.
+3. Find **OverKill Smart Hub**, download it, restart Home Assistant, then add the integration from **Settings → Devices & services**.
 
 ### Manual installation
 
@@ -91,7 +94,7 @@ This repository includes GitHub Actions for the official HACS Action, Home Assis
 
 ## HACS publication status
 
-See [`PRE_RELEASE_CHECKLIST.md`](PRE_RELEASE_CHECKLIST.md). This repository now uses the same MIT License as the Net Metering integration. MIT is an OSI-approved open-source license, so the license itself does not block HACS default-list submission. Default listing still requires the official HACS Action and Hassfest checks to pass, a full GitHub release, and Home Assistant Brands registration. Until those steps are complete, install it via HACS's Custom repositories feature.
+See [`PRE_RELEASE_CHECKLIST.md`](PRE_RELEASE_CHECKLIST.md). This repository uses the MIT License. The integration icon is already shipped in-tree at `custom_components/overkill_smart_hub/brand/icon.png`; a separate Home Assistant Brands PR is not required. HACS default listing depends on the official HACS Action and Home Assistant Hassfest checks passing, a full GitHub release, and acceptance of the existing submission to `hacs/default`. Until the default-list PR is merged, use the temporary Custom repositories steps above.
 
 ## License
 
