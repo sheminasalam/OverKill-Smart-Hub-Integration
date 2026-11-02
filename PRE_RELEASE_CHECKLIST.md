@@ -36,6 +36,6 @@
 
 ## Release and HACS listing
 
-- [ ] After CI and the functional matrix pass, publish a **full GitHub Release** tagged `v1.3.1` (a tag alone is not the full release step).
+- [ ] After CI and the functional matrix pass, publish a **full GitHub Release** tagged `1.3.1` (a tag alone is not the full release step).
 - [x] Keep the existing submission to `hacs/default` updated with the new release and re-request review after requested changes are complete.
 - [ ] Remember: users can install through HACS Custom repositories while default-store inclusion is pending.
