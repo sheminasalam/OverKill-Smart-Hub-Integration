@@ -12,9 +12,9 @@
 
 ## Automated validation
 
-- [ ] GitHub Actions: HACS validation passes without ignored failures.
-- [ ] GitHub Actions: Home Assistant Hassfest passes.
-- [ ] Static package/translation checks pass.
+- [x] GitHub Actions: HACS validation passes without ignored failures.
+- [x] GitHub Actions: Home Assistant Hassfest passes.
+- [x] Static package/translation checks pass.
 - [ ] Review any warnings from CI rather than treating a successful Python compile as sufficient.
 
 ## Home Assistant functional testing
