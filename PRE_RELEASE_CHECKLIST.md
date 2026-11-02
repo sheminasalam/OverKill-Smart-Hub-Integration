@@ -30,13 +30,12 @@
 - [ ] Reload/unload, reconnect, rediscovery, removing a bridge and assigning a hub to None are tested.
 - [ ] Existing installations using version 1.3.0 data can be upgraded without losing their config entries or certificate files.
 
-## Home Assistant Brands
+## Branding
 
-- [ ] Submit `OverKill-HomeAssistant-Brands-Submission.zip` to the `home-assistant/brands` repository as a PR under `custom_integrations/overkill_smart_hub/`.
-- [ ] Wait for the Brands PR to be accepted. HACS's integration publishing guidance requires brand registration.
+- [x] Confirm the integration ships `custom_components/overkill_smart_hub/brand/icon.png`. No separate `home-assistant/brands` repository PR is needed for this integration.
 
 ## Release and HACS listing
 
-- [ ] After CI and the functional matrix pass, publish a **full GitHub Release** tagged `v1.3.0` (a tag alone is not the full release step).
-- [ ] Only after the public repository is valid, actions pass, license is recognized, and Brands registration is complete, submit the relevant PR to `hacs/default` if default-store listing is desired.
-- [ ] Remember: HACS custom-repository installation can be tested before default-store inclusion, but default inclusion has additional requirements.
+- [ ] After CI and the functional matrix pass, publish a **full GitHub Release** tagged `v1.3.1` (a tag alone is not the full release step).
+- [x] Keep the existing submission to `hacs/default` updated with the new release and re-request review after requested changes are complete.
+- [ ] Remember: users can install through HACS Custom repositories while default-store inclusion is pending.
