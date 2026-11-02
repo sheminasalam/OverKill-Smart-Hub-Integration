@@ -27,6 +27,18 @@ from .const import (
 
 _LOGGER = logging.getLogger(__name__)
 
+def _stop_paho_client(client) -> None:
+    """Disconnect and stop Paho's network loop outside Home Assistant's loop."""
+    try:
+        client.disconnect()
+    except Exception:  # noqa: BLE001
+        _LOGGER.debug("Paho disconnect raised during shutdown", exc_info=True)
+    try:
+        client.loop_stop()
+    except Exception:  # noqa: BLE001
+        _LOGGER.debug("Paho network-loop stop raised during shutdown", exc_info=True)
+
+
 _DIRECTIVE_RE = re.compile(r"^alexa/([0-9A-Fa-f]{4})/directive$")
 
 # paho API version shim
@@ -207,14 +219,7 @@ class AwsBridgeRuntime:
         self._client = None
         self._connected = False
         if client is not None:
-            try:
-                client.loop_stop()
-            except Exception:  # noqa: BLE001
-                pass
-            try:
-                client.disconnect()
-            except Exception:  # noqa: BLE001
-                pass
+            await self.hass.async_add_executor_job(_stop_paho_client, client)
 
     # ------------------------------------------------------------ Routing
 
