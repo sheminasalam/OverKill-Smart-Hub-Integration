@@ -4,7 +4,7 @@ This public repository contains the Home Assistant custom integration at `custom
 
 ## Current validation
 
-The repository now uses the MIT License, matching the Net Metering integration. GitHub currently reports the official HACS Action, Hassfest and static checks passing. End-to-end tests in Home Assistant are still required before treating version 1.3.0 as a production release.
+The repository uses the MIT License. The `custom_components/overkill_smart_hub/brand/` directory already contains the integration icon; no separate Home Assistant Brands PR is required. Version 1.3.1 contains non-blocking Paho client shutdown and updated HACS installation guidance. End-to-end tests in Home Assistant should still be completed across the supported transport and AWS bridge configurations before treating it as production-ready.
 
 Relevant links:
 
@@ -13,15 +13,18 @@ Relevant links:
 - Release page: https://github.com/sheminasalam/OverKill-Smart-Hub-Integration/releases
 - Pre-release checklist: [`PRE_RELEASE_CHECKLIST.md`](PRE_RELEASE_CHECKLIST.md)
 
-## Finish before submitting to HACS default
+## HACS default listing and review
 
-1. Complete the Home Assistant functional test matrix in `PRE_RELEASE_CHECKLIST.md`, including Local MQTT, Cloud MQTT, Both, hub discovery, reconnection, multiple hubs, bridge assignment and AWS/Alexa routing.
-2. Submit the icon assets from `OverKill-HomeAssistant-Brands-Submission.zip` to the `home-assistant/brands` repository under `custom_integrations/overkill_smart_hub/`, and wait until the brand entry is merged.
-3. Publish a full GitHub Release tagged `v1.3.0`. A tag alone is not a published Release.
-4. In the personal fork `sheminasalam/add-mutual-fund-tracker`, create a new branch from `master` (do not use `master` directly). Add `sheminasalam/OverKill-Smart-Hub-Integration` to the sorted `integration` file.
-5. Open a pull request from that new branch to `hacs/default:master`. The default-list PR checks verify branding, repository metadata, the HACS manifest and repository release.
+1. Run the official HACS Action, Home Assistant Hassfest and repository static checks on the release commit.
+2. Complete or explicitly track the Home Assistant functional test matrix in `PRE_RELEASE_CHECKLIST.md`, including Local MQTT, Cloud MQTT, Both, hub discovery, reconnection, multiple hubs, bridge assignment and AWS/Alexa routing.
+3. Publish a full GitHub Release tagged `v1.3.1`; a tag alone is not a published GitHub Release.
+4. Update the existing HACS default-list submission with the release link and re-request review after the maintainer's requested changes are complete.
 
-The existing `add-net-metering` branch and its PR should remain separate; the OverKill entry belongs in its own branch and PR.
+The integration icon is already included at `custom_components/overkill_smart_hub/brand/icon.png`. A separate PR to `home-assistant/brands` is not required. Do not create a second HACS default-list PR; update the existing submission.
+
+## HACS installation
+
+Once the integration is included in HACS default, users can find **OverKill Smart Hub** in **HACS → Integrations** and install it directly. While the default-list review is pending, users can add the repository through **HACS → Integrations → ⋮ → Custom repositories**, category **Integration**.
 
 ## HACS custom repository install
 
