@@ -17,7 +17,7 @@ Relevant links:
 
 1. Run the official HACS Action, Home Assistant Hassfest and repository static checks on the release commit.
 2. Complete or explicitly track the Home Assistant functional test matrix in `PRE_RELEASE_CHECKLIST.md`, including Local MQTT, Cloud MQTT, Both, hub discovery, reconnection, multiple hubs, bridge assignment and AWS/Alexa routing.
-3. Publish a full GitHub Release tagged `v1.3.1`; a tag alone is not a published GitHub Release.
+3. Publish a full GitHub Release tagged `1.3.1`; a tag alone is not a published GitHub Release.
 4. Update the existing HACS default-list submission with the release link and re-request review after the maintainer's requested changes are complete.
 
 The integration icon is already included at `custom_components/overkill_smart_hub/brand/icon.png`. A separate PR to `home-assistant/brands` is not required. Do not create a second HACS default-list PR; update the existing submission.
