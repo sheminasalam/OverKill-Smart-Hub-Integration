@@ -2,6 +2,13 @@
 
 All notable changes to the OverKill Smart Hub Home Assistant integration are documented here.
 
+## 1.3.1 — Non-blocking Paho shutdown and HACS review updates
+
+- Move Paho MQTT disconnect and network-loop shutdown into Home Assistant's executor for both the Cloud MQTT broker and AWS IoT bridge, preventing `loop_stop()` from blocking the event loop.
+- Disconnect before stopping the Paho network loop.
+- Update HACS installation instructions to lead with HACS search and explain the temporary custom-repository fallback while default listing is under review.
+- Clarify that the integration's in-tree `brand/` assets satisfy its branding requirement; no separate Home Assistant Brands PR is needed.
+
 ## 1.3.0 — HACS release candidate
 
 - Prepared a dedicated, single-integration HACS repository layout.
