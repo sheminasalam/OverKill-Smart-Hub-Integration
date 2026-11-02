@@ -18,6 +18,18 @@ from .const import (
 
 _LOGGER = logging.getLogger(__name__)
 
+def _stop_paho_client(client) -> None:
+    """Disconnect and stop Paho's network loop outside Home Assistant's loop."""
+    try:
+        client.disconnect()
+    except Exception:  # noqa: BLE001
+        _LOGGER.debug("Paho disconnect raised during shutdown", exc_info=True)
+    try:
+        client.loop_stop()
+    except Exception:  # noqa: BLE001
+        _LOGGER.debug("Paho network-loop stop raised during shutdown", exc_info=True)
+
+
 try:
     from paho.mqtt.enums import CallbackAPIVersion
     import paho.mqtt.client as mqtt
@@ -125,14 +137,7 @@ class CloudBrokerRuntime:
         self._client = None
         self._connected = False
         if client is not None:
-            try:
-                client.loop_stop()
-            except Exception:
-                pass
-            try:
-                client.disconnect()
-            except Exception:
-                pass
+            await self.hass.async_add_executor_job(_stop_paho_client, client)
         # No subscribers survive this runtime. The coordinator will rebuild
         # subscriptions against a newly-created runtime when needed.
         self._subs.clear()
